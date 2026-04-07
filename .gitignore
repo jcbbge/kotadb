@@ -1,0 +1,100 @@
+# dependencies (bun install)
+node_modules
+
+# output
+out
+dist
+*.tgz
+
+# Next.js
+.next
+web/.next
+web/out
+
+# code coverage
+coverage
+*.lcov
+htmlcov/
+.coverage
+coverage.json
+coverage.info
+
+# logs
+logs
+/.adw_logs
+/automation/.adw_logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# automation artifacts
+/automation/agents/
+
+# dotenv environment variable files
+.env
+.env.test
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+.env.develop
+.env.production
+automation/adws/.env
+automation/adws/.env.local
+.env.adws
+.env.adws.local
+*.env.backup
+*.env.vercel.preview
+
+# trees
+automation/trees/
+
+# test infrastructure
+.test-project-name
+
+# app data directory
+app/data/
+
+# trees
+automation/trees/
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+__pycache__/
+
+# IntelliJ based IDEs
+.idea
+
+# Finder (MacOS) folder config
+.DS_Store
+.adw_logs/
+
+# .mcp.json for Claude Code MCP integration
+.mcp.json
+
+# Claude Code local settings (user-specific)
+.claude/settings.local.json
+
+# Playwright MCP screenshots
+.playwright-mcp/
+
+# Migration backups
+migrations-backup.tar.gz
+
+# Supabase CLI metadata
+supabase/
+
+.mcp.json
+
+.vscode/
+# KotaDB local storage
+.kotadb/
+
+.eraser/
+
+# Automation data directory (keep .gitkeep for directory structure)
+automation/.data/*
+!automation/.data/.gitkeep
+# Automation worktrees (isolated git working directories)
+automation/.worktrees/
