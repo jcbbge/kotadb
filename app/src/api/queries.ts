@@ -92,11 +92,12 @@ export function extractLineSnippets(
   if (!content || !query) return [];
 
   const lines = content.split("\n");
-  const lowerQuery = query.toLowerCase();
+  const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   const matches: SnippetMatch[] = [];
 
   lines.forEach((line, index) => {
-    if (line.toLowerCase().includes(lowerQuery)) {
+    const lower = line.toLowerCase();
+    if (tokens.some(t => lower.includes(t))) {
       const lineNumber = index + 1; // 1-indexed
       const start = Math.max(0, index - contextLines);
       const end = Math.min(lines.length, index + contextLines + 1);
@@ -312,10 +313,10 @@ function storeReferencesInternal(
  * @returns Escaped term safe for FTS5 MATCH clause
  */
 function escapeFts5Term(term: string): string {
-  // Escape internal double quotes by doubling them
-  const escaped = term.replace(/"/g, '""');
-  // Wrap in double quotes for exact phrase matching
-  return `"${escaped}"`;
+  const tokens = term.trim().split(/\s+/);
+  // Prefix each token with content: to target the content column of the FTS5 table.
+  // Join with AND so multi-word queries match files containing all terms (not exact phrase).
+  return tokens.map(t => `content:"${t.replace(/"/g, '""')}"`).join(" AND ");
 }
 
 function searchFilesInternal(
@@ -1146,11 +1147,7 @@ export async function runIndexingWorkflow(request: IndexRequest): Promise<{
   if (request.localPath) {
     localPath = resolve(request.localPath);
 
-    const workspaceRoot = resolve(process.cwd());
-    if (!localPath.startsWith(workspaceRoot)) {
-      throw new Error(`localPath must be within workspace: ${workspaceRoot}`);
-    }
-    if (!fullName.includes("/")) {
+if (!fullName.includes("/")) {
       fullName = `local/${fullName}`;
     }
   } else {

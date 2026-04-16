@@ -308,7 +308,7 @@ export function createExpressApp(): Express {
 
 	// Sentry error handler middleware (captures errors for remote monitoring)
 	// Must be placed after all routes but before custom error logging
-	app.use(expressErrorHandler());
+	app.use(expressErrorHandler() as unknown as express.ErrorRequestHandler);
 
 	// Error logging middleware (structured logs for local debugging)
 	app.use(errorLoggingMiddleware);
