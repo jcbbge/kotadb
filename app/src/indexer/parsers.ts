@@ -21,6 +21,9 @@ const SUPPORTED_EXTENSIONS = new Set<string>([
 const IGNORED_DIRECTORIES = new Set<string>([
 	// Version control
 	".git",
+	// Agent / tooling cruft (not source; pollutes the index with worktree copies)
+	".claude", // agent worktrees, skills, settings
+	".graveyard", // archived/dead code
 	// Package managers
 	"node_modules",
 	"vendor", // Go, Ruby
